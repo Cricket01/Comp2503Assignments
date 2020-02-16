@@ -57,13 +57,13 @@ public class A2
         System.out.println();
         System.out.println( MAX_DISPLAY + " Most Frequent");
 
-        Collections.sort(wordList, new MostFrequentWords());
+        Collections.sort(wordList, new MostFrequentWords);
         printWordList( MAX_DISPLAY);
 
         System.out.println();
         System.out.println( MAX_DISPLAY + " Least Frequent");
 
-        Collections.sort( wordList, new LeastFrequentWord());
+        Collections.sort( wordList, new LeastFrequentWord);
         printWordList( MAX_DISPLAY);
 
         System.out.println();
@@ -146,7 +146,7 @@ public class A2
      */
     private void addWord( String inputWord)
     {
-        Token curWord = new Token( inputWord);
+        T curWord = new T( inputWord);
 
         //.contains uses overridden .equals method in Token
         if ( wordList.contains(curWord))

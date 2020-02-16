@@ -1,5 +1,3 @@
-import java.util.Comparator;
-
 /**
  * This class is used to store each word and the frequency of that word.
  * @author Dylan Borchert
@@ -14,7 +12,7 @@ public class Token implements Comparable<Token>
 	 * Constructor that sets the word as an instance.
 	 * @param word is used to be initialized.
 	 */
-	public Token( String word)
+	public Token(String word)
 	{
 		this.word = word;
 	}
@@ -41,7 +39,7 @@ public class Token implements Comparable<Token>
 	public boolean equals( Object obj)
 	{
 		//checks to see if object is an instance of Token for
-		if(obj instanceof Token)
+		if(obj instanceof Token )
 		{
 			//obj is casted as Token type
 			return ((Token) obj).getWord().equals( this.word);

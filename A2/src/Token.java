@@ -1,3 +1,4 @@
+import java.util.Comparator;
 
 /**
  * This class is used to store each word and the frequency of that word.

@@ -18,9 +18,7 @@ public class A2
 {
     private static final int MAX_DISPLAY = 10;
 
-    private SLL<Token> alphWordList = new SLL<Token>();
-    private SLL<Token> leastFreqWordList = new SLL<Token>(new LeastFrequentWord());
-    private SLL<Token> mostFreqWordList = new SLL<Token>(new MostFrequentWords());
+    private SLL<Token> list = new SLL<Token>();
 
     private String[] stopwords = {"a", "about", "all", "am", "an",
             "and", "any", "are", "as", "at", "be", "been", "but", "by", "can",
@@ -40,8 +38,7 @@ public class A2
 
     private Scanner input = new Scanner( System.in);
 
-    public static void main( String[] args)
-    {
+    public static void main( String[] args) {
         A2 a1 = new A2();
         a1.run();
     }
@@ -54,24 +51,45 @@ public class A2
     {
 
         System.out.println( "Total Words: " + totalWordList);
-        System.out.println( "Unique Words: " + alphWordList.size());
+        System.out.println( "Unique Words: " + list.size());
         System.out.println( "Stop Words: " + stopWordList);
         System.out.println();
         System.out.println( MAX_DISPLAY + " Most Frequent");
 
-
-
+        printTopTen(mostfreq());
 
         System.out.println();
         System.out.println( MAX_DISPLAY + " Least Frequent");
 
-
+        printTopTen(leastFreq());
 
         System.out.println();
         System.out.println( "All");
 
+        printList();
+
 
     }
+
+    private void printTopTen(SLL<Token> list) {
+
+    }
+
+    private void printList() {
+        
+    }
+
+    private SLL<Token> leastFreq() {
+        SLL<Token> leastFreqList = new SLL<Token>(new LeastFrequentWord());
+
+    }
+
+    private SLL<Token> mostfreq() {
+        SLL<Token> mostFreqList = new SLL<Token>(new MostFrequentWords());
+
+    }
+
+
 
     /**
      * Will use Scanner to read the input and add it to wordList.
@@ -82,23 +100,17 @@ public class A2
      * If the word is unique, then it will be added to the wordList
      * </p>
      */
-    private void readFile()
-    {
+    private void readFile() {
 
-        while ( input.hasNext())
-        {
+        while ( input.hasNext()) {
             String word = input.next().toLowerCase().
                     replaceAll("[^a-z]", "").trim();
 
-            if ( word.length() > 0)
-            {
-                if ( isStopWord( word))
-                {
+            if ( word.length() > 0) {
+                if ( isStopWord( word)) {
                     stopWordList++;
-                }
-                else
-                {
-                    SLL.addInOrder( word);
+                } else {
+                    list.addInOrder(new Token(word));
                 }
 
                 totalWordList++;
@@ -112,8 +124,7 @@ public class A2
      *  false, if the inputWord is not a stop word.
      * @param inputWord is the word to be check if it's a stop word.
      */
-    private boolean isStopWord( String inputWord)
-    {
+    private boolean isStopWord( String inputWord) {
         //Converts the Array to an ArrayList to use .contains()
         return Arrays.asList( stopwords).contains( inputWord);
     }
@@ -122,9 +133,7 @@ public class A2
     /**
      * Run the program. Read the file, then print the results.
      */
-    public void run()
-    {
-
+    public void run() {
         readFile();
         printResults();
     }

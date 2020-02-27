@@ -8,16 +8,14 @@ public class SLL<T extends Comparable<T>> implements Iterable<T>
     private int size = 0;
     Comparator<T> comparator = null;
 
-    public SLL()
-    {
+    public SLL() {
         head = null;
         tail = null;
         size = 0;
     }
 
-    public SLL(Comparator<T> comparator)
-    {
-
+    public SLL(Comparator<T> comparator) {
+        this.comparator = comparator;
     }
 
     // Public Methods
@@ -32,15 +30,28 @@ public class SLL<T extends Comparable<T>> implements Iterable<T>
 
     /** Empty the list.
      */
-    public void emptyList()
-    {
+    public void emptyList() {
         head = null;
         tail = null;
         size = 0;
     }
 
-    public void addInOrder()
-    {
+    public void addInOrder(T data) {
+        if(head == null) {
+            addHead(new Node<T>(data));
+        } else if (comparator != null){
+            addInNaturalOrder(data);
+         } else {
+            addInComparatorOrder(data);
+        }
+
+    }
+
+    public void addInNaturalOrder(T data) {
+
+    }
+
+    public void addInComparatorOrder(T data) {
 
     }
 
@@ -48,12 +59,10 @@ public class SLL<T extends Comparable<T>> implements Iterable<T>
      *  @param i the element to return
      *  @return the ith element, null if there isnt one.
      */
-    public T get( int i)
-    {
+    public T get( int i) {
         Node<T> curr = head;
         int j = 0;
-        while ( curr != null && j < i)
-        {
+        while ( curr != null && j < i) {
             curr = curr.getNext();
             j++;
         }
@@ -68,28 +77,21 @@ public class SLL<T extends Comparable<T>> implements Iterable<T>
 
     /* Add a new Node to the head of the list.
      */
-    private void addHead( Node<T> n)
-    {
-        if (head == null) // empty list
-        {
-            head = n;
+    private void addHead( Node<T> n) {
+        if (head == null) {// empty list
             tail = n;
-        }
-        else
-        {
+        } else {
             n.setNext(head);
-            head = n;
         }
+        head = n;
         size++;
     }
 
     /* Delete the node at the head of the list and return a pointer to it.
      */
-    private Node<T> delHead()
-    {
+    private Node<T> delHead() {
         Node<T> n = null;
-        if ( head != null)
-        {
+        if ( head != null) {
             n = head;
             if ( head == tail)
                 tail = head.getNext();
@@ -102,9 +104,7 @@ public class SLL<T extends Comparable<T>> implements Iterable<T>
 
 
     //Idea from Pedro & Nahuel to move Node in SLL
-    private static class Node<T extends Comparable<T>>
-    {
-
+    private static class Node<T extends Comparable<T>> {
         private T data;
         private Node<T> next;
 
@@ -128,7 +128,7 @@ public class SLL<T extends Comparable<T>> implements Iterable<T>
         }
     }
 
-    //Idea from Jordan Pratt to use Iterator
+    //Idea from Jordan Pratt to use Iterator and help from Pedro
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>()
@@ -142,8 +142,7 @@ public class SLL<T extends Comparable<T>> implements Iterable<T>
             }
 
             @Override
-            public T next()
-            {
+            public T next() {
             		T afterCurr = curr.getData();
                 	curr = curr.getNext();
                 	return afterCurr;
@@ -152,5 +151,3 @@ public class SLL<T extends Comparable<T>> implements Iterable<T>
 
     }
 }
-
-

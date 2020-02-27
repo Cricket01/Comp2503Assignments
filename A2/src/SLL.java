@@ -1,4 +1,4 @@
-import java.util.Comparator;
+ import java.util.Comparator;
 import java.util.Iterator;
 
 public class SLL<T extends Comparable<T>> implements Iterable<T>
@@ -128,24 +128,25 @@ public class SLL<T extends Comparable<T>> implements Iterable<T>
         }
     }
 
+    //Idea from Jordan Pratt to use Iterator
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>()
         {
-            private Node<T> curr = null;
+            private Node<T> curr = head;
 
             @Override
             public boolean hasNext()
             {
-                if(curr == null) {return false;}
-                if(curr.getNext() == null) {return false;}
-                return true;
+               return curr != null;
             }
 
             @Override
             public T next()
             {
-
+            		T afterCurr = curr.getData();
+                	curr = curr.getNext();
+                	return afterCurr;
             }
         };
 

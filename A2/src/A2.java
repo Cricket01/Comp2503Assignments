@@ -1,7 +1,7 @@
 import java.util.*;
 //--------------------------------------------------------------------
 /**
- * COMP 2503 Winter 2020 Assignment 1.
+ * COMP 2503 Winter 2020 Assignment 2.
  * <p>
  * This program reads a text file and compiles a list of the
  * words together with how many each word appears.
@@ -18,7 +18,9 @@ public class A2
 {
     private static final int MAX_DISPLAY = 10;
 
-    private SLL<Token> wordList = new SLL<Token>();
+    private SLL<Token> alphWordList = new SLL<Token>();
+    private SLL<Token> leastFreqWordList = new SLL<Token>(new LeastFrequentWord());
+    private SLL<Token> mostFreqWordList = new SLL<Token>(new MostFrequentWords());
 
     private String[] stopwords = {"a", "about", "all", "am", "an",
             "and", "any", "are", "as", "at", "be", "been", "but", "by", "can",
@@ -52,41 +54,23 @@ public class A2
     {
 
         System.out.println( "Total Words: " + totalWordList);
-        System.out.println( "Unique Words: " + wordList.size());
+        System.out.println( "Unique Words: " + alphWordList.size());
         System.out.println( "Stop Words: " + stopWordList);
         System.out.println();
         System.out.println( MAX_DISPLAY + " Most Frequent");
 
-        Collections.sort(wordList, new MostFrequentWords);
-        printWordList( MAX_DISPLAY);
+
+
 
         System.out.println();
         System.out.println( MAX_DISPLAY + " Least Frequent");
 
-        Collections.sort( wordList, new LeastFrequentWord);
-        printWordList( MAX_DISPLAY);
+
 
         System.out.println();
         System.out.println( "All");
 
-        Collections.sort( wordList);
-        printWordList( wordList.size());
-    }
 
-    /**
-     * Will print out words in the list.
-     * The amount of words printed out depends on maxAmt.
-     * To avoid code duplication in print results method.
-     * @param maxAmt is the highest amount of words that will be printed.
-     */
-    private void printWordList( int maxAmt)
-    {
-        int listSize = wordList.size();
-
-        for ( int i = 0; i < Math.min( listSize, maxAmt); i++)
-        {
-            System.out.println( wordList.get(i).toString());
-        }
     }
 
     /**
@@ -114,7 +98,7 @@ public class A2
                 }
                 else
                 {
-                    addWord( word);
+                    SLL.addInOrder( word);
                 }
 
                 totalWordList++;
@@ -134,32 +118,6 @@ public class A2
         return Arrays.asList( stopwords).contains( inputWord);
     }
 
-    /**
-     * Adds inputWord to wordlist ArrayList.
-     * <p>
-     * If the word is already in the list it will increment frequency by 1.
-     * </p>
-     * <p>
-     * If word is not in the list it will add it to the wordList.
-     * </p>
-     * @param inputWord is the word that needs to be added to the list
-     */
-    private void addWord( String inputWord)
-    {
-        T curWord = new T( inputWord);
-
-        //.contains uses overridden .equals method in Token
-        if ( wordList.contains(curWord))
-        {
-            //.index uses overridden .equals method in Token
-            int tokenIndex = wordList.indexOf( curWord);
-            wordList.get( tokenIndex).addFrequency();
-        }
-        else
-        {
-            wordList.add( curWord);
-        }
-    }
 
     /**
      * Run the program. Read the file, then print the results.

@@ -51,7 +51,7 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 
 	}
 
-	public void addInNaturalOrder(Node<T> curNode) {
+	private void addInNaturalOrder(Node<T> curNode) {
 
 		if (curNode.getData().compareTo(head.getData()) <= 0) {
 			addHead(curNode);
@@ -70,7 +70,7 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 		}
 	}
 
-	public void addInComparatorOrder(Node<T> curNode) {
+	private void addInComparatorOrder(Node<T> curNode) {
 		if (comparator.compare(curNode.getData(), head.getData()) <= 0) {
 			addHead(curNode);
 		} else {
@@ -92,6 +92,25 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 		return head == null && tail == null;
 	}
 
+
+	/** Return the ith element of the list.
+	 *  @param i the element to return
+	 *  @return the ith element, null if there isnt one.
+	 */
+	public T get( int i)
+	{
+		Node<T> curr = head;
+		int j = 0;
+		while ( curr != null && j < i)
+		{
+			curr = curr.getNext();
+			j++;
+		}
+		if ( curr != null)
+			return curr.getData();
+		else
+			return null;
+	}
 	// Private methods
 
 	/*

@@ -5,7 +5,7 @@ import java.util.Comparator;
  * A1.java by least frequency alphabetically.
  * @author Dylan Borchert
  */
-public class LeastFrequentWord implements Comparator<Token>
+public class LeastFrequentWords implements Comparator<Token>
 {
 
 	/**

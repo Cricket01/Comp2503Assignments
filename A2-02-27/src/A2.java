@@ -76,6 +76,7 @@ public class A2 {
     }
 
     private void printList() {
+        System.out.println("ran print list");
         for(Token curToken : list) {
             System.out.println(curToken.getWord() + ":" + curToken.getFrequency());
         }
@@ -114,10 +115,24 @@ public class A2 {
                 if ( isStopWord( word)) {
                     stopWordList++;
                 } else {
-                    list.addInOrder(new Token(word));
+                    checkAdd(new Token(word));
                 }
 
                 totalWordList++;
+            }
+        }
+    }
+
+    private void checkAdd(Token curToken) {
+        if(list.isEmpty()) { list.addInOrder(curToken); }
+        for(Token t : list)
+        {
+            if ( t.equals(curToken) )
+            {
+                t.addFrequency();
+            } else
+            {
+                list.addInOrder(curToken);
             }
         }
     }

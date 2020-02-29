@@ -47,8 +47,7 @@ public class A2 {
     /**
      * Will sort and print the final result of the wordList.
      */
-    private void printResults()
-    {
+    private void printResults() {
 
         System.out.println( "Total Words: " + totalWordList);
         System.out.println( "Unique Words: " + list.size());
@@ -67,25 +66,34 @@ public class A2 {
         System.out.println( "All");
 
         printList();
-
-
     }
 
+    /**
+     * Will print the top num of items in the list provided.
+     * @param listToPrint is the list to be printed
+     */
     private void printTopNum(SLL<Token> listToPrint) {
         int listSize = listToPrint.size();
 
-        for (int index = 0; index < Math.min( listSize, TOP_NUM); index++)
-        {
+        for (int index = 0; index < Math.min( listSize, TOP_NUM); index++) {
             System.out.println(listToPrint.get(index));
         }
     }
 
+    /**
+     * Prints the main list
+     */
     private void printList() {
         for(Token curToken : list) {
             System.out.println(curToken);
         }
     }
 
+    /**
+     * Will sort the main list depending on what the comparator
+     * @param sort the comparator to sort the main list
+     * @return the sorted list
+     */
     private SLL<Token> sortList(Comparator sort) {
         SLL<Token> mostFreqList = new SLL<Token>(sort);
         for(Token curToken : list) {
@@ -121,6 +129,12 @@ public class A2 {
         }
     }
 
+    /**
+     * Well check the list to see if the word is in the list.
+     * If it is it will add it in the list
+     * If it is not then it would increase frequency
+     * @param curToken is the word that need to be added or iterated
+     */
     private void checkAdd(Token curToken) {
         for(Token t : list) {
             if ( t.equals(curToken) ) {
@@ -141,7 +155,6 @@ public class A2 {
         //Converts the Array to an ArrayList to use .contains()
         return Arrays.asList( stopwords).contains( inputWord);
     }
-
 
     /**
      * Run the program. Read the file, then print the results.

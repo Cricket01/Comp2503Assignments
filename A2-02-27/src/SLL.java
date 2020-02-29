@@ -21,7 +21,6 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 
 	/**
 	 * Return the number of elements in the list.
-	 * 
 	 * @return int number of elements in the list.
 	 */
 	public int size() {
@@ -29,14 +28,10 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 	}
 
 	/**
-	 * Empty the list.
+	 * Adds data to linked list depending on order.
+	 * Adds natural order if no comparator is provided.
+	 * @param data is what will be added to node
 	 */
-	public void emptyList() {
-		head = null;
-		tail = null;
-		size = 0;
-	}
-
 	public void addInOrder(T data) {
 
 		Node<T> curNode = new Node<T>(data);
@@ -51,6 +46,13 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 
 	}
 
+
+	// addInOrder helper methods
+
+	/**
+	 * Will add the Node in to the linked list depending on the natural order.
+	 * @param curNode the Node to be added into the list.
+	 */
 	private void addInNaturalOrder(Node<T> curNode) {
 
 		if (curNode.getData().compareTo(head.getData()) <= 0) {
@@ -60,7 +62,7 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 			while (currentNode.getNext() != null && curNode.getData().compareTo(currentNode.getNext().getData()) > 0) {
 				currentNode = currentNode.getNext();
 			}
-			//TODO: code duplication 
+
 			if (currentNode.getNext() == null) {
 				addTail(curNode);
 			} else {
@@ -70,6 +72,10 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 		}
 	}
 
+	/**
+	 * Will add the NOde int on the linked list depending on the comparator order.
+	 * @param curNode the node to be added into the list.
+	 */
 	private void addInComparatorOrder(Node<T> curNode) {
 		if (comparator.compare(curNode.getData(), head.getData()) <= 0) {
 			addHead(curNode);
@@ -78,7 +84,7 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 			while(currentNode.getNext() != null && comparator.compare(curNode.getData(),currentNode.getNext().getData()) > 0) {
 				currentNode = currentNode.getNext();
 			}
-			//TODO: code duplication 
+
 			if (currentNode.getNext() == null) {
 				addTail(curNode);
 			} else {
@@ -88,20 +94,25 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 		}
 	}
 
+
+	/**
+	 * Will tell if the list is empty.
+	 * @return true if if the list is empty
+	 */
 	public boolean isEmpty() {
 		return head == null && tail == null;
 	}
 
 
 	/** Return the ith element of the list.
-	 *  @param i the element to return
+	 *  @param index the element to return
 	 *  @return the ith element, null if there isnt one.
 	 */
-	public T get( int i)
+	public T get( int index)
 	{
 		Node<T> curr = head;
 		int j = 0;
-		while ( curr != null && j < i)
+		while ( curr != null && j < index)
 		{
 			curr = curr.getNext();
 			j++;
@@ -113,30 +124,32 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 	}
 	// Private methods
 
-	/*
+	/**
 	 * Add a new Node to the head of the list.
+	 * @param node the node to be added to the head.
 	 */
-	public void addHead(Node<T> n) {
+	public void addHead(Node<T> node) {
 		if (head == null) {
-			head = n;
-			tail = n;
-			n.setNext(null);
+			tail = node;
+			node.setNext(null);
 		} else {
-			n.setNext(head);
-			head = n;
+			node.setNext(head);
 		}
+		head = node;
 	}
 
-	public void addTail(Node<T> n) {
+	/**
+	 * Add a new Node to the tail of the list.
+	 * @param node the node to be added to the tail.
+	 */
+	public void addTail(Node<T> node) {
 		if (tail == null) {
-			head = n;
-			tail = n;
-			n.setNext(null);
+			head = node;
 		} else {
-			tail.setNext(n);
-			tail = n;
-			n.setNext(null);
+			tail.setNext(node);
 		}
+		tail = node;
+		node.setNext(null);
 	}
 
 	// Idea from Pedro & Nahuel to move Node in SLL
@@ -174,6 +187,10 @@ public class SLL<T extends Comparable<T>> implements Iterable<T> {
 	}
 
 	// Idea from Jordan Pratt to use Iterator and help from Pedro
+
+	/**
+	 * Allows the use of for each loop in A2 to iterate through the linked list
+	 */
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<T>() {

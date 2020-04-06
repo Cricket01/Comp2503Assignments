@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class A2 {
     
-    private static final int MAX_DISPLAY = 10;
+    private static final int TOP_NUM = 10;
 
     private SLL<Token> list = new SLL<Token>();
 
@@ -47,53 +47,60 @@ public class A2 {
     /**
      * Will sort and print the final result of the wordList.
      */
-    private void printResults()
-    {
+    private void printResults() {
 
         System.out.println( "Total Words: " + totalWordList);
         System.out.println( "Unique Words: " + list.size());
         System.out.println( "Stop Words: " + stopWordList);
         System.out.println();
-        System.out.println( MAX_DISPLAY + " Most Frequent");
+        System.out.println( TOP_NUM + " Most Frequent");
 
-        printTopTen(mostfreq());
+        printTopNum(sortList(new MostFrequentWords()));
 
         System.out.println();
-        System.out.println( MAX_DISPLAY + " Least Frequent");
+        System.out.println( TOP_NUM + " Least Frequent");
 
-        printTopTen(leastFreq());
+        printTopNum(sortList(new LeastFrequentWords()));
 
         System.out.println();
         System.out.println( "All");
 
         printList();
-
-
     }
 
-    private void printTopTen(SLL<Token> listToPrint) {
-    	//TODO:
-    }
+    /**
+     * Will print the top num of items in the list provided.
+     * @param listToPrint is the list to be printed
+     */
+    private void printTopNum(SLL<Token> listToPrint) {
+        int listSize = listToPrint.size();
 
-    private void printList() {
-        for(Token curToken : list) {
-            System.out.println(curToken.getWord() + ":" + curToken.getFrequency());
+        for (int index = 0; index < Math.min( listSize, TOP_NUM); index++) {
+            System.out.println(listToPrint.get(index));
         }
     }
 
-    private SLL<Token> leastFreq() {
-        SLL<Token> leastFreqList = new SLL<Token>(new LeastFrequentWord());
-        //TODO:
-        return leastFreqList;
+    /**
+     * Prints the main list
+     */
+    private void printList() {
+        for(Token curToken : list) {
+            System.out.println(curToken);
+        }
     }
 
-    private SLL<Token> mostfreq() {
-        SLL<Token> mostFreqList = new SLL<Token>(new MostFrequentWords());
-        //TODO:
+    /**
+     * Will sort the main list depending on what the comparator
+     * @param sort the comparator to sort the main list
+     * @return the sorted list
+     */
+    private SLL<Token> sortList(Comparator sort) {
+        SLL<Token> mostFreqList = new SLL<Token>(sort);
+        for(Token curToken : list) {
+            mostFreqList.addInOrder(curToken);
+        }
         return mostFreqList;
     }
-
-
 
     /**
      * Will use Scanner to read the input and add it to wordList.
@@ -114,12 +121,28 @@ public class A2 {
                 if ( isStopWord( word)) {
                     stopWordList++;
                 } else {
-                    list.addInOrder(new Token(word));
+                    checkAdd(new Token(word));
                 }
 
                 totalWordList++;
             }
         }
+    }
+
+    /**
+     * Well check the list to see if the word is in the list.
+     * If it is it will add it in the list
+     * If it is not then it would increase frequency
+     * @param curToken is the word that need to be added or iterated
+     */
+    private void checkAdd(Token curToken) {
+        for(Token t : list) {
+            if ( t.equals(curToken) ) {
+                t.addFrequency();
+                return;
+            }
+        }
+        list.addInOrder(curToken);
     }
 
     /**
@@ -132,7 +155,6 @@ public class A2 {
         //Converts the Array to an ArrayList to use .contains()
         return Arrays.asList( stopwords).contains( inputWord);
     }
-
 
     /**
      * Run the program. Read the file, then print the results.
